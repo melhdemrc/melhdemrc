@@ -7,7 +7,7 @@
 
 - 🌱 I’m currently learning **python and its libraries**
 
-- 📫 How to reach me **melihdmrc1967@gmail.com**
+- 📫 How to reach me **melhdemrc@gmail.com**
 
 - ⚡ Fun fact **I am obsessed with RDR 2 :D**
 
