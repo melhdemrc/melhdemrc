@@ -1,16 +1,30 @@
-name: Metrics
+name: GitHub Metrics
+
 on:
-  schedule: [{cron: "0 0 * * *"}] # Her gün gece 00:00'da güncellenecek
-  workflow_dispatch:              # İstersen manuel çalıştırabilirsin
+  schedule:
+    - cron: '0 0 * * *' # Günlük çalıştırmak için
+  workflow_dispatch:
 
 jobs:
-  github-metrics:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: lowlighter/metrics@latest
-        with:
-          token: ${{ secrets.METRICS_TOKEN }}
-          filename: metrics.isocalendar.svg
-          config_timezone: Europe/Istanbul
-          base: ""
-          plugin_isocalendar: yes
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Run Lowlighter Metrics
+      uses: lowlighter/metrics@latest
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        github: melhdemrc
+        plugin: isocalendar
+        output: ./metrics.isocalendar.svg
+
+    - name: Commit Metrics
+      run: |
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        git add metrics.isocalendar.svg
+        git commit -m 'Update GitHub Metrics' || echo "No changes to commit"
+        git push
