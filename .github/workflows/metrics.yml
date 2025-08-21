@@ -1,0 +1,16 @@
+name: Metrics
+on:
+  schedule: [{cron: "0 0 * * *"}] # Her gün gece 00:00'da güncellenecek
+  workflow_dispatch:              # İstersen manuel çalıştırabilirsin
+
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lowlighter/metrics@latest
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          filename: metrics.isocalendar.svg
+          config_timezone: Europe/Istanbul
+          base: ""
+          plugin_isocalendar: yes
