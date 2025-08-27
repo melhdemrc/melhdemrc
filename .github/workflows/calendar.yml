@@ -1,0 +1,29 @@
+name: Full-year Calendar
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Her hafta pazar günü çalışacak
+  workflow_dispatch:       # Manuel tetikleme seçeneği
+
+jobs:
+  generate-calendar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Generate Full-Year Calendar
+        uses: lowlighter/metrics@latest
+        with:
+          filename: metrics.plugin.isocalendar.fullyear.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          base: ""
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
+
+      - name: Commit & Push generated file
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git add metrics.plugin.isocalendar.fullyear.svg
+          git commit -m "Update full-year calendar"
+          git push
