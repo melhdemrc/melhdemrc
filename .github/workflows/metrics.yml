@@ -1,0 +1,57 @@
+name: Metrics
+on:
+  # Schedule daily updates to refresh the metrics
+  schedule:
+    - cron: "0 0 * * *" # Runs daily at midnight UTC
+  # Allow manual triggering from the Actions tab
+  workflow_dispatch:
+  # Run on push to main/master branch
+  push:
+    branches: ["main", "master"]
+jobs:
+  github-metrics-isocalendar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required to write the generated SVG to the repository
+    steps:
+      - name: Half-year calendar
+        uses: lowlighter/metrics@latest
+        with:
+          filename: metrics.plugin.isocalendar.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          base: "" # Empty base to focus on the isometric calendar
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: half-year # Explicitly set to half-year
+
+  github-metrics-achievements:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required to write the generated SVG to the repository
+    steps:
+      - name: Compact achievements display
+        uses: lowlighter/metrics@latest
+        with:
+          filename: metrics.plugin.achievements.compact.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          base: ""
+          plugin_achievements: yes
+          plugin_achievements_only: >-
+            polyglot, stargazer, sponsor, deployer, member, maintainer, developer,
+            scripter, packager, explorer, infographile, manager
+          plugin_achievements_display: compact
+          plugin_achievements_threshold: X
+
+  github-metrics-topics:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required to write the generated SVG to the repository
+    steps:
+      - name: Topics display
+        uses: lowlighter/metrics@latest
+        with:
+          filename: metrics.plugin.topics.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          base: ""
+          plugin_topics: yes
+          plugin_topics_limit: 12
+          plugin_topics_sort: stars
