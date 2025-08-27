@@ -40,18 +40,3 @@ jobs:
             scripter, packager, explorer, infographile, manager
           plugin_achievements_display: compact
           plugin_achievements_threshold: X
-
-  github-metrics-topics:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write # Required to write the generated SVG to the repository
-    steps:
-      - name: Topics display
-        uses: lowlighter/metrics@latest
-        with:
-          filename: metrics.plugin.topics.svg
-          token: ${{ secrets.METRICS_TOKEN }}
-          base: ""
-          plugin_topics: yes
-          plugin_topics_limit: 12
-          plugin_topics_sort: stars
