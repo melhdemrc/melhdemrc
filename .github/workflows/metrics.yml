@@ -22,21 +22,3 @@ jobs:
           base: "" # Empty base to focus on the isometric calendar
           plugin_isocalendar: yes
           plugin_isocalendar_duration: half-year # Explicitly set to half-year
-
-  github-metrics-achievements:
-      runs-on: ubuntu-latest
-      permissions:
-        contents: write # Required to write the generated SVG to the repository
-      steps:
-        - name: Compact achievements display
-          uses: lowlighter/metrics@latest
-          with:
-            filename: metrics.plugin.achievements.compact.svg
-            token: ${{ secrets.METRICS_TOKEN }}
-            base: ""
-            plugin_achievements: yes
-            plugin_achievements_only: >-
-              polyglot, stargazer, sponsor, deployer, member, maintainer, developer,
-              scripter, packager, explorer, infographile, manager
-            plugin_achievements_display: compact
-            plugin_achievements_threshold: 0 # Changed from 'X' to a valid number (default is 0)
